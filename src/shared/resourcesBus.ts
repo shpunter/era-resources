@@ -12,7 +12,7 @@ import { BehaviorSubject, Subject } from "rxjs";
 
 const initialState: ResourcesState = {
   down: { historyIDX: 0 },
-  up: { history: [] },
+  up: { history: [], hydrated: false },
 };
 
 const g = globalThis as BusGlobal;
@@ -66,6 +66,9 @@ export type ResourcesState = {
   up: {
     /** Resource pickups per timeline day (index = historyIDX). */
     history: ResourceType[][];
+    // False until the remote finishes reading its persisted state from IDB, so
+    // the host can show a loading state instead of an empty/stale view.
+    hydrated: boolean;
   };
 };
 
